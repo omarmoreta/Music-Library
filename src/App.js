@@ -1,46 +1,58 @@
-import React, { useRef, useState } from "react";
-import SearchBar from "./SearchBar";
-import Gallery from "./Gallery";
 import "./App.css";
-import { DataContext } from "./context/DataContext";
-import { SearchContext } from "./context/SearchContext";
+import React, { useEffect, useState } from "react";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import AlbumView from "./AlbumView";
+import ArtistView from "./ArtistView";
+import Gallery from "./Gallery";
+import SearchBar from "./SearchBar";
 
 function App() {
-  let [message, setMessage] = useState("Search for Music!");
+  let [searchTerm, setSearchTerm] = useState("");
   let [data, setData] = useState([]);
-  let searchInput = useRef("");
+  let [message, setMessage] = useState("Search for Music!");
 
-  const API_URL = "https://itunes.apple.com/search?term=";
+  useEffect(() => {
+    if (searchTerm) {
+      document.title = `${searchTerm} Music`;
+      const fetchData = async () => {
+        const response = await fetch(
+          `https://itunes.apple.com/search?term=${searchTerm}`
+        );
+        const resData = await response.json();
+        if (resData.results.length > 0) {
+          setData(resData.results);
+        } else {
+          setMessage("Not Found");
+        }
+      };
+      fetchData();
+    }
+  }, [searchTerm]);
 
   const handleSearch = (e, term) => {
     e.preventDefault();
-    const fetchData = async () => {
-      document.title = `${term} Music`;
-      const response = await fetch(API_URL + term);
-      const resData = await response.json();
-      if (resData.results.length > 0) {
-        return setData(resData.results);
-      } else {
-        return setMessage("Not Found");
-      }
-    };
-    fetchData();
+    setSearchTerm(term);
   };
 
   return (
     <div className="App">
-      <SearchContext.Provider
-        value={{
-          term: searchInput,
-          handleSearch: handleSearch,
-        }}
-      >
-        <SearchBar />
-      </SearchContext.Provider>
       {message}
-      <DataContext.Provider value={data}>
-        <Gallery />
-      </DataContext.Provider>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <div>
+                <SearchBar handleSearch={handleSearch} />
+                <Gallery data={data} />
+              </div>
+            }
+          />
+          <Route path="/album/:id" element={<AlbumView />} />
+          <Route path="/artist/:id" element={<ArtistView />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
