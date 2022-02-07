@@ -1,10 +1,10 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import AlbumView from "./AlbumView";
-import ArtistView from "./ArtistView";
-import Gallery from "./Gallery";
-import SearchBar from "./SearchBar";
+import AlbumView from "./components/AlbumView";
+import ArtistView from "./components/AlbumView";
+import Gallery from "./components/Gallery";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   let [searchTerm, setSearchTerm] = useState("");

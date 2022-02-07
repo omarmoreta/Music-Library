@@ -15,9 +15,9 @@ function GalleryItem(props) {
           position: "relative",
         }}
       >
-        <Link to={`/album/${props.item.artistId}`}>Album</Link>
+        <Link to={`/album/${props.item.collectionId}`}>Album</Link>
         <br />
-        <Link to={`/artist/${props.item.collectionId}`}>Artist</Link>
+        <Link to={`/artist/${props.item.artistId}`}>Artist</Link>
         <h3>{props.item.trackName}</h3>
         <h4>{props.item.collectionName}</h4>
       </div>
@@ -39,8 +39,8 @@ function GalleryItem(props) {
           color: "white",
         }}
       >
-        <Link to={`/album/${props.item.artistId}`}> Album </Link>
-        <Link to={`/artist/${props.item.collectionId}`}>Artist</Link>
+        <Link to={`/album/${props.item.collectionId}`}>Album</Link>
+        <Link to={`/artist/${props.item.artistId}`}>Artist</Link>
         <h2>{props.item.trackName}</h2>
         <h3>{props.item.collectionName}</h3>
         <h4>{props.item.primaryGenreName}</h4>
