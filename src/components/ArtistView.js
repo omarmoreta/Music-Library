@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import Spinner from "./Spinner";
 
 const ArtistView = () => {
   const { id } = useParams();
@@ -44,7 +45,9 @@ const ArtistView = () => {
       {artistData.length > 0 ? (
         <h2>{artistData[0].artistName}</h2>
       ) : (
-        <h2>Loading...</h2>
+        <h2>
+          <Spinner />
+        </h2>
       )}
       {navButtons()}
       {renderAlbums}

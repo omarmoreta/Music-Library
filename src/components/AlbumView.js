@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Spinner from "./Spinner";
 
 const AlbumView = () => {
   const { id } = useParams();
@@ -36,7 +37,9 @@ const AlbumView = () => {
       {albumData.length > 0 ? (
         <h2>{albumData[0].collectionName}</h2>
       ) : (
-        <h2>Loading...</h2>
+        <h2>
+          <Spinner />
+        </h2>
       )}
       {renderSongs}
     </div>
